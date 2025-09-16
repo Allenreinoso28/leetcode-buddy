@@ -35,7 +35,7 @@ services:
       - 3000:3000
     command: npm run dev
     networks:
-      - leetngreet_network
+      - leetngreet-network
 
   # Add more containers below (nginx, postgres, etc.)
   leetngreet-database:
@@ -49,5 +49,5 @@ services:
 # Define a network, which allows containers to communicate
 # with each other, by using their container name as a hostname
 networks:
-  leetngreet_network:
+  leetngreet-network:
     external: true

@@ -129,6 +129,7 @@ This will populate your MongoDB problems collection.
 ### 5. Run with Docker (Development)
 ```
 docker compose build
+docker create network leet
 ```
 ```
 docker compose up 
