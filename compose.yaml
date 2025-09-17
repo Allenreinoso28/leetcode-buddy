@@ -25,8 +25,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./leetngreet/src:/app/src
-      - ./leetngreet/public:/app/public
+      - ./leetngreet:/app
       - /app/node_modules
     depends_on:
       - leetngreet-database
