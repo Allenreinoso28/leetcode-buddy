@@ -148,3 +148,54 @@ Frontend + API → Vercel
 Database → MongoDB Atlas
 
 Update environment variables in Vercel dashboard.
+
+# Security Plans
+
+## 🔐 Authentication & User Security
+
+Use NextAuth.js or your own JWT-based auth flow → both work seamlessly with Vercel.
+
+Store secrets (JWT secret, OAuth client secrets, etc.) in Vercel Environment Variables, not in code.
+
+Always hash passwords with bcrypt (if you’re not using OAuth).
+
+Implement rate limiting on sensitive endpoints (/login, /signup) using something like Upstash Rate Limit
+.
+
+## 🌐 API Security (Vercel Functions or External Backend)
+
+Don’t expose MongoDB URI directly — backend API functions should handle queries, not the client.
+
+Use CORS: if you add a separate backend service, restrict it to your frontend’s Vercel domain.
+
+Add Helmet (if Express) or secure headers in Vercel’s config for better HTTP protections.
+
+## 🗄️ MongoDB Atlas Security
+
+Network Access: Allow only Vercel’s IP ranges or use MongoDB Atlas + Vercel Integration (secure by default).
+
+Database User: Create a limited user role (read/write only for your app’s DB).
+
+TLS/SSL: MongoDB Atlas enforces this by default → keep it enabled.
+
+Rotate DB credentials regularly (easy with Vercel env vars).
+
+## 🚀 Vercel Deployment Security
+
+Keep API keys, DB URIs, JWT secrets in Environment Variables via Vercel dashboard.
+
+Don’t check .env files into GitHub. Add .env to .gitignore.
+
+Use preview environments safely (Vercel auto-generates them for PRs). Make sure sensitive endpoints (like admin routes) still require authentication even in previews.
+
+Enable Vercel’s HTTPS (automatic on all deployments).
+
+## 🛡️ Frontend Security
+
+Store JWTs in httpOnly cookies (not localStorage).
+
+Sanitize any user-generated content (comments, posts, profile bios).
+
+If you use React, rely on dangerouslySetInnerHTML only if sanitized.
+
+Protect from CSRF if using cookies (NextAuth has built-in CSRF protection).
