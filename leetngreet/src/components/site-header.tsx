@@ -48,8 +48,8 @@ export function SiteHeader() {
         </div>
 
         {/* Right Section: Search + User */}
-        <div className="flex items-center">
-          <SearchForm className="w-full" />
+        <div className="flex w-md items-center pr-12">
+          <SearchForm className="w-sm" />
           <Separator orientation="vertical" className="ml-2 h-5" />
           <NavUser user={data.user} />
         </div>
