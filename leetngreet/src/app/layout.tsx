@@ -15,13 +15,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body className="h-full overflow-hidden">
         <Providers>
           <AuthGate>
             <div className="[--header-height:calc(--spacing(14))]">
               <SidebarProvider className="flex flex-col">
                 <SiteHeader />
-                <div className="flex flex-1 overflow-hidden">
+                <div className="flex flex-1">
                   <AppSidebar />
                   <SidebarInset>
                     {children}
