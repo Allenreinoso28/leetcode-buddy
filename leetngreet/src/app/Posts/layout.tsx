@@ -13,6 +13,7 @@ export default function UnAuthLayout({
   children: React.ReactNode;
 }) {
   return (
+    <div className="h-(--header-height) w-full flex flex-col">
     <SidebarProvider className="flex flex-col">
         <SiteHeader />
         <div className="flex flex-1">
@@ -22,5 +23,6 @@ export default function UnAuthLayout({
             </SidebarInset>
         </div>
     </SidebarProvider>
+    </div>
   );
 }

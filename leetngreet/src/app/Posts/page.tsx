@@ -10,7 +10,7 @@ export default function HomePage() {
 
  
   return (
-    <div bg-red>Feed Page
+    <div className="bg-red-500">Feed Page home
       <h1>Welcome to LeetNGreet</h1>
       <p>Your Coding Journey Isn't Something You Have To Make Alone.</p>
     </div>

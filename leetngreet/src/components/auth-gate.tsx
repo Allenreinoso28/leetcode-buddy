@@ -1,10 +1,11 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export function AuthGate({ children }: { children: React.ReactNode }) {
   const { data: session, status } = useSession();
+  const router = useRouter();
 
   // Optional loading state
   if (status === "loading") {
@@ -18,7 +19,7 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
   // If no session, show the overlay login screen
   if (!session) {
     return (
-      redirect('/Login')
+      router.push('/Login')
     );
   }
 

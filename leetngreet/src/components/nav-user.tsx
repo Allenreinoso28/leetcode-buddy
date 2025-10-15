@@ -4,12 +4,14 @@ import {
   BadgeCheck,
   Bell,
   ChevronsUpDown,
-  CreditCard,
   LogOut,
   LogIn,
   Sparkles,
+  User,
+  Settings2,
+  Eclipse
 } from "lucide-react"
-
+import { useTheme } from "next-themes"
 import {
   Avatar,
   AvatarFallback,
@@ -20,7 +22,6 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
@@ -30,7 +31,8 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import { signOut, signIn, useSession } from "next-auth/react"
+import { signOut, useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 export function NavUser({
   user,
@@ -43,18 +45,18 @@ export function NavUser({
 }) {
   const { isMobile } = useSidebar()
   const { data: session } = useSession();
+  const router = useRouter()
 
   const handleAuthClick = () => {
     if (session) {
       signOut({ callbackUrl: "/" })
     } else {
-      signIn()
+      router.push("/Login")
     }
   }
 
+  const { setTheme } = useTheme()
   return (
-    <SidebarMenu>
-      <SidebarMenuItem>
         <DropdownMenu >
           <DropdownMenuTrigger className="w-3xs justify-right" asChild>
             <SidebarMenuButton
@@ -63,7 +65,7 @@ export function NavUser({
             >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarFallback className="rounded-lg"><User/></AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{user.name}</span>
@@ -78,19 +80,6 @@ export function NavUser({
             align="start"
             sideOffset={4}
           >
-            <DropdownMenuLabel className="p-0 font-normal">
-              <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
-                </Avatar>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
-                </div>
-              </div>
-            </DropdownMenuLabel>
-            <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <Sparkles />
@@ -99,17 +88,21 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => router.push("/Profile")}>
                 <BadgeCheck />
                 Account
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <CreditCard />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
                 <Bell />
                 Notifications
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Settings2 />
+                Settings
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme(theme => theme === "dark" ? "light" : "dark")}>
+                <Eclipse />
+                Light / Dark Mode
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
@@ -128,7 +121,5 @@ export function NavUser({
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      </SidebarMenuItem>
-    </SidebarMenu>
   )
 }
