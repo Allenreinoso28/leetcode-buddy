@@ -26,9 +26,38 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
 
-  // Use JWTs (JSON web tokens) for session handling instead of a database session
-  session: { strategy: "jwt" },
+  session: {
+    strategy: "jwt",
+    maxAge: 60 * 60 * 24 * 7, // 7 days
+  },
 
-  // Used to encrypt JWTs and session tokens (keep this secret!)
-  secret: process.env.NEXTAUTH_SECRET,
+  // Optional: fine-tune JWT behavior
+  jwt: {
+    maxAge: 60 * 60 * 24 * 7, // 7 days
+  },
+
+  callbacks: {
+    async jwt({ token, user }) {
+      // When user logs in for the first time
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      // Attach the user's ID to the session object
+      if (token && session.user) {
+        session.user.id = token.id as string;
+      }
+      return session;
+    },
+  },
+
+  // Optional: pretty URLs for sign-in/sign-out pages
+  pages: {
+    signIn: "/login",
+  },
+
+  // Optional: debug mode (disable in production)
+  debug: process.env.NODE_ENV === "development",
 };
