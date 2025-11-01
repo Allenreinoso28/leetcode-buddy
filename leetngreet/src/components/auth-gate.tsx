@@ -1,13 +1,21 @@
 "use client";
 
 import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export function AuthGate({ children }: { children: React.ReactNode }) {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  // Optional loading state
+  // Redirect if user is unauthenticated — but only after status resolves
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.replace("/Login");
+    }
+  }, [status, router]);
+
+  // Optional loading UI (only shows on first mount)
   if (status === "loading") {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -16,13 +24,11 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
     );
   }
 
-  // If no session, show the overlay login screen
-  if (!session) {
-    return (
-      router.push('/Login')
-    );
+  // If authenticated, just render children — no refetch, no flicker
+  if (session) {
+    return <>{children}</>;
   }
 
-  // If logged in, show the app normally
-  return <>{children}</>;
+  // While redirecting, render nothing
+  return null;
 }

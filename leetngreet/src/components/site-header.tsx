@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { PanelLeft } from "lucide-react";
+import { Menu } from "lucide-react";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useSession } from "next-auth/react";
 import { NavUser } from "@/components/nav-user";
@@ -38,7 +38,7 @@ export function SiteHeader() {
         {/* Left Section: Sidebar + Logo */}
         <div className="flex items-center gap-2">
           <Button className="p-6" variant="ghost" size="icon" onClick={toggleSidebar}>
-            <PanelLeft className="size-8" />
+            <Menu className="size-8" />
           </Button>
           <Separator orientation="vertical" className="mr-2" />
 

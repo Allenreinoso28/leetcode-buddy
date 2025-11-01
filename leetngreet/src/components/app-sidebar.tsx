@@ -25,7 +25,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       title: "/ Hello_World",
       url: "/Hello",
       icon: SquareTerminal,
-      isActive: true,
+      isActive: pathname === "/Hello",
     },
     {
       title: "/ Posts",
@@ -35,29 +35,31 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         {
           title: "/ All_Posts",
           url: "/Posts",
+          isActive: pathname === "/Posts",
         },
         {
           title: "/ Following",
           url: "/Posts/Following",
+          isActive: pathname === "/Posts/Following",
         },
       ],
-      isActive: pathname?.startsWith("/Posts"),
+      isActive: pathname === "/Posts" || pathname === "/Posts/Following",
     },
     {
       title: "/ Compose",
       url: "/Compose",
       icon: Braces,
-      isActive: true,
+      isActive: pathname === "/Compose",
     },
     {
       title: "/ User_Profile",
       url: "/Profile",
       icon: User,
-      isActive: true,
+      isActive: pathname === "/Profile",
     },
     {
-      title: "Settings",
-      url: "#",
+      title: "/ Settings",
+      url: "/Settings",
       icon: Settings2,
       items: [
         {
